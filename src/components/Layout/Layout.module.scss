@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .flex {
+    display: flex;
+    flex-grow: 1;
+
+    & main {
+      padding: 60px 110px;
+    }
+  }
+}

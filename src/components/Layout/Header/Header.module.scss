@@ -1,0 +1,11 @@
+.header {
+  & h1 {
+    font-size: 48px;
+    font-weight: 500;
+    margin-bottom: 41px;
+
+    & span {
+      color: var(--color-red);
+    }
+  }
+}
