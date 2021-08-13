@@ -1,5 +1,9 @@
 import HttpClient from './HttpClient';
 
+/**
+ * @param {string} baseUrl
+ * @param {string} langCode
+ */
 export default class ApiClient extends HttpClient {
   constructor(baseUrl: string, langCode: string) {
     super({

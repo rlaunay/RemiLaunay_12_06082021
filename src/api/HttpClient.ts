@@ -1,36 +1,43 @@
-type Headers = {
+type Options = {
   [key: string]: string;
-};
-
-type Body = {
-  [key: string]: unknown;
 };
 
 type Params = {
   baseUrl?: string;
-  headers?: Headers;
+  headers?: Options;
 };
 
-type RequestInit = {
-  method: 'GET' | 'POST' | 'DELETE';
-  [key: string]: string;
-};
-
+/**
+ * Create an instance of HttpClient for doing backend call with fetch api
+ * @param {Params} options HttpClient options
+ */
 export default class HttpClient {
   private baseUrl: string;
-  private headers: Headers;
+  private headers: Options;
 
   constructor(options: Params = {}) {
     this.baseUrl = options.baseUrl || '';
     this.headers = options.headers || {};
   }
 
-  setHeader(key: string, value: string) {
+  /**
+   * Method for adding headers for futur request
+   * @param {string} key
+   * @param {string} value
+   * @returns {HttpClient} return the object for chaining
+   */
+  setHeader(key: string, value: string): HttpClient {
     this.headers[key] = value;
     return this;
   }
 
-  private async fetchJSON<T = any>(endpoint: string, options: RequestInit): Promise<T> {
+  /**
+   * Use fetch api on the given endpoint and with the given options
+   * @param {string} endpoint
+   * @param {Options} options
+   * @returns {Promise<T>}
+   */
+  private async fetchJSON<T>(endpoint: string, options: Options = {}): Promise<T | undefined> {
     const res = await fetch(this.baseUrl + endpoint, {
       ...options,
       headers: this.headers,
@@ -39,29 +46,18 @@ export default class HttpClient {
     if (!res.ok) throw new Error(res.statusText);
 
     if (res.status !== 204) return res.json();
-
-    return undefined as any;
   }
 
-  get(endpoint: string, options = {}) {
+  /**
+   * Use GET method on the given endpoint
+   * @param {string} endpoint
+   * @param {Options} options
+   * @returns {Promise<T | undefined>}
+   */
+  get<T>(endpoint: string, options: Options = {}): Promise<T | undefined> {
     return this.fetchJSON(endpoint, {
       ...options,
       method: 'GET',
-    });
-  }
-
-  post(endpoint: string, body: Body, options = {}) {
-    return this.fetchJSON(endpoint, {
-      ...options,
-      body: JSON.stringify(body),
-      method: 'POST',
-    });
-  }
-
-  delete(endpoint: string, options = {}) {
-    return this.fetchJSON(endpoint, {
-      ...options,
-      method: 'DELETE',
     });
   }
 }
