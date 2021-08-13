@@ -35,7 +35,7 @@ export default class HttpClient {
    * Use fetch api on the given endpoint and with the given options
    * @param {string} endpoint
    * @param {Options} options
-   * @returns {Promise<T>}
+   * @returns {Promise}
    */
   private async fetchJSON<T>(endpoint: string, options: Options = {}): Promise<T | undefined> {
     const res = await fetch(this.baseUrl + endpoint, {
@@ -49,10 +49,10 @@ export default class HttpClient {
   }
 
   /**
-   * Use GET method on the given endpoint
+   * Use GET method at the given endpoint
    * @param {string} endpoint
    * @param {Options} options
-   * @returns {Promise<T | undefined>}
+   * @returns {Promise}
    */
   get<T>(endpoint: string, options: Options = {}): Promise<T | undefined> {
     return this.fetchJSON(endpoint, {
