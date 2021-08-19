@@ -1,10 +1,14 @@
 import HttpClient from './HttpClient';
+import User from '../models/user';
+import Activity from '../models/activity';
+import AverageSessions from '../models/averageSessions';
+import Performance from '../models/performance';
 
 /**
  * @param {string} baseUrl
  * @param {string} langCode
  */
-export default class ApiClient extends HttpClient {
+class ApiClient extends HttpClient {
   constructor(baseUrl: string, langCode: string) {
     super({
       baseUrl,
@@ -16,25 +20,27 @@ export default class ApiClient extends HttpClient {
 
   get user() {
     return {
-      get: (id: number) => this.get(`/users/${id}`),
+      get: (id: number) => this.get<{ data: User }>(`/user/${id}`),
     };
   }
 
   get activity() {
     return {
-      get: (id: number) => this.get(`/user/${id}/activity`),
+      get: (id: number) => this.get<{ data: Activity }>(`/user/${id}/activity`),
     };
   }
 
   get averageSessions() {
     return {
-      get: (id: number) => this.get(`/user/${id}/average-sessions`),
+      get: (id: number) => this.get<{ data: AverageSessions }>(`/user/${id}/average-sessions`),
     };
   }
 
-  get performancce() {
+  get performance() {
     return {
-      get: (id: number) => this.get(`/user/${id}/performance`),
+      get: (id: number) => this.get<{ data: Performance }>(`/user/${id}/performance`),
     };
   }
 }
+
+export default new ApiClient('http://localhost:8080', 'fr');
