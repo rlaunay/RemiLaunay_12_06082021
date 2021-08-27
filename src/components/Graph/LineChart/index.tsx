@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { Session } from '../../../models/averageSessions';
 
 const DUMMY_DATA = [
   { day: 1, sessionLength: 30 },
@@ -13,10 +14,6 @@ const DUMMY_DATA = [
 
 const jour = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
-type Data = {
-  day: number;
-  sessionLength: number;
-};
 
 const LineChart: React.FC = () => {
   useEffect(() => {
@@ -27,16 +24,16 @@ const LineChart: React.FC = () => {
     const xScale = d3.scaleLinear().domain([1, 7]).range([10, 390]);
     const yScale = d3.scaleLinear().domain([0, 60]).range([10, 390]);
 
-    const xAccessor = (d: Data): number => {
+    const xAccessor = (d: Session): number => {
       return d.day;
     };
 
-    const yAccessor = (d: Data): number => {
+    const yAccessor = (d: Session): number => {
       return d.sessionLength;
     };
 
     const line = d3
-      .line<Data>()
+      .line<Session>()
       .x((d) => xScale(xAccessor(d)))
       .y((d) => yScale(yAccessor(d)))
       .curve(d3.curveBasis);
