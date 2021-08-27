@@ -1,4 +1,5 @@
 import React from 'react';
+import LineChart from './components/Graph/LineChart';
 import Layout from './components/Layout';
 import Header from './components/Layout/Header';
 import useAuth from './context/authContext';
@@ -7,7 +8,7 @@ import useAuth from './context/authContext';
  * @return {React.ReactElement}
  */
 const App: React.FC = (): React.ReactElement => {
-  const { isLoading, error } = useAuth();
+  const { isLoading, error, user } = useAuth();
   return (
     <Layout>
       {isLoading ? (
@@ -17,6 +18,7 @@ const App: React.FC = (): React.ReactElement => {
       ) : (
         <React.Fragment>
           <Header />
+          <LineChart />
         </React.Fragment>
       )}
     </Layout>
