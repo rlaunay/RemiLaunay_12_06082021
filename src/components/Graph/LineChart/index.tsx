@@ -2,6 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { Session } from '../../../models/averageSessions';
 
+import classes from './LineChart.module.scss';
+import useAverageSessions from '../../../hooks/useAverageSessions';
+import useAuth from '../../../context/authContext';
+
 const DUMMY_DATA = [
   { day: 1, sessionLength: 30 },
   { day: 2, sessionLength: 40 },
@@ -14,12 +18,16 @@ const DUMMY_DATA = [
 
 const jour = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
-
 const LineChart: React.FC = () => {
+  const { user } = useAuth();
+  const { averageSessions } = useAverageSessions(user!.id);
+
   useEffect(() => {
     //   const width = 400;
     // const height = 100;
     // const margin = 10;
+
+    if (!averageSessions) return;
 
     const xScale = d3.scaleLinear().domain([1, 7]).range([10, 390]);
     const yScale = d3.scaleLinear().domain([0, 60]).range([10, 390]);
@@ -45,7 +53,7 @@ const LineChart: React.FC = () => {
     container
       .append('g')
       .append('path')
-      .attr('d', line(DUMMY_DATA))
+      .attr('d', line(averageSessions.sessions))
       .attr('fill', 'none')
       .attr('stroke', 'Red')
       .attr('stroke-width', 2);
@@ -53,10 +61,10 @@ const LineChart: React.FC = () => {
     container.append('text').text('Salut');
 
     container.append('g').call(xAxisGen.ticks(7).tickFormat((d) => jour[+d - 1]));
-  }, []);
+  }, [averageSessions]);
 
   return (
-    <div>
+    <div className={classes.container}>
       <svg id="lineChart"></svg>
     </div>
   );

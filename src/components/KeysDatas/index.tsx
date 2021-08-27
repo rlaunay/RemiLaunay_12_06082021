@@ -1,5 +1,8 @@
 import React from 'react';
+import KeyData from './KeyData';
 import { dataFormat } from '../../helpers/dataFormat';
+
+import classes from './KeysDatas.module.scss';
 
 interface KeyDataProps {
   keydata: { [key: string]: number };
@@ -12,9 +15,12 @@ interface KeyDataProps {
 const KeysDatas: React.FC<KeyDataProps> = (props): React.ReactElement => {
   const data = Object.entries(props.keydata).map(([key, value], index) => {
     console.log(value, key);
+    const formatted = dataFormat(value, key);
+
+    return <KeyData data={formatted} key={key} />;
   });
 
-  return <div></div>;
+  return <ul className={classes.ul}>{data}</ul>;
 };
 
 export default KeysDatas;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import AverageSessions from '../models/averageSessions';
 import api from '../api';
 
-const usePerformance = (id: number, key: string) => {
+const useAverageSessions = (id: number) => {
   const [averageSessions, setAverageSessions] = useState<AverageSessions | null>(null);
 
   useEffect(() => {
@@ -18,4 +18,4 @@ const usePerformance = (id: number, key: string) => {
   return { averageSessions };
 };
 
-export default usePerformance;
+export default useAverageSessions;

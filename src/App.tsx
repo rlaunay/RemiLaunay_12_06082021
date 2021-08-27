@@ -3,6 +3,7 @@ import LineChart from './components/Graph/LineChart';
 import Layout from './components/Layout';
 import Header from './components/Layout/Header';
 import useAuth from './context/authContext';
+import Dashboard from './pages/dashboard';
 
 /**
  * @return {React.ReactElement}
@@ -16,10 +17,12 @@ const App: React.FC = (): React.ReactElement => {
       ) : error ? (
         <p>Une erreur est survenue!</p>
       ) : (
-        <React.Fragment>
-          <Header />
-          <LineChart />
-        </React.Fragment>
+        user && (
+          <React.Fragment>
+            <Header />
+            <Dashboard />
+          </React.Fragment>
+        )
       )}
     </Layout>
   );
