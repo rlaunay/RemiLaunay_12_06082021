@@ -23,14 +23,21 @@ const LineChart: React.FC = () => {
   const { averageSessions } = useAverageSessions(user!.id);
 
   useEffect(() => {
-    //   const width = 400;
-    // const height = 100;
+    let container = null;
+    const width = 260;
+    const height = 260;
     // const margin = 10;
 
     if (!averageSessions) return;
 
-    const xScale = d3.scaleLinear().domain([1, 7]).range([10, 390]);
-    const yScale = d3.scaleLinear().domain([0, 60]).range([10, 390]);
+    const xScale = d3
+      .scaleLinear()
+      .domain([1, 7])
+      .range([0, width - 20]);
+    const yScale = d3
+      .scaleLinear()
+      .domain([0, 60]) // TODO domain dynamique
+      .range([75, height - 30]);
 
     const xAccessor = (d: Session): number => {
       return d.day;
@@ -46,21 +53,35 @@ const LineChart: React.FC = () => {
       .y((d) => yScale(yAccessor(d)))
       .curve(d3.curveBasis);
 
-    const xAxisGen = d3.axisBottom(xScale);
+    const xAxisGen = d3.axisTop(xScale).tickSizeOuter(0);
 
-    const container = d3.select('#lineChart').attr('width', 400).attr('height', 400);
+    container = d3.select('#lineChart').attr('width', width).attr('height', height);
 
     container
       .append('g')
       .append('path')
       .attr('d', line(averageSessions.sessions))
       .attr('fill', 'none')
-      .attr('stroke', 'Red')
-      .attr('stroke-width', 2);
+      .attr('stroke', 'white')
+      .attr('stroke-width', 1);
 
-    container.append('text').text('Salut');
+    container
+      .append('text')
+      .text('Durée moyenne des')
+      .attr('class', classes.title)
+      .attr('transform', 'translate(34, 29)');
+    container.append('text').text('sessions').attr('class', classes.title).attr('transform', 'translate(34, 49)');
 
-    container.append('g').call(xAxisGen.ticks(7).tickFormat((d) => jour[+d - 1]));
+    container
+      .append('g')
+      .attr('transform', `translate(0, ${height + 9})`)
+      .attr('class', classes.xAxis)
+      .call(
+        xAxisGen
+          .ticks(7)
+          .tickPadding(20)
+          .tickFormat((d) => jour[+d - 1]),
+      );
   }, [averageSessions]);
 
   return (

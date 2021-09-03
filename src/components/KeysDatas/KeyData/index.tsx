@@ -10,8 +10,8 @@ interface KeyDataProps {
 const KeyData: React.FC<KeyDataProps> = ({ data }) => {
   return (
     <li className={classes.keyData}>
-      {<data.icon />}
-      <div>
+      <data.icon />
+      <div className={classes.values}>
         <span>{data.value}</span>
         <span>{data.label}</span>
       </div>

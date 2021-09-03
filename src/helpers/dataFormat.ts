@@ -1,5 +1,8 @@
 import { FC } from 'react';
 import CaloriesIco from '../components/Icon/CaloriesIco';
+import GlucideIco from '../components/Icon/GlucideIco';
+import LipideIco from '../components/Icon/LipideIco';
+import ProteinIco from '../components/Icon/ProteinIco';
 
 const data: {
   [key: string]: {
@@ -16,17 +19,17 @@ const data: {
   proteinCount: {
     name: 'Proteines',
     unite: 'g',
-    icon: CaloriesIco,
+    icon: ProteinIco,
   },
   carbohydrateCount: {
     name: 'Glucides',
     unite: 'g',
-    icon: CaloriesIco,
+    icon: GlucideIco,
   },
   lipidCount: {
     name: 'Lipides',
     unite: 'g',
-    icon: CaloriesIco,
+    icon: LipideIco,
   },
 };
 

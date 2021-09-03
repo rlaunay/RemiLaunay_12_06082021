@@ -1,3 +1,21 @@
 .container {
-  background-color: green;
+  background-color: #ff0000;
+  height: 260px;
+  width: 260px;
+  overflow: hidden;
+  border-radius: 5px;
+
+  & svg {
+    position: relative;
+  }
+
+  & .xAxis {
+    color: white;
+  }
+
+  & .title {
+    fill: white;
+    font-size: 15px;
+    font-weight: lighter;
+  }
 }
