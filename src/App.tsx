@@ -1,9 +1,9 @@
 import React from 'react';
-import LineChart from './components/Graph/LineChart';
+import SpiderChart from './components/Graph/SpiderChart';
 import Layout from './components/Layout';
 import Header from './components/Layout/Header';
 import useAuth from './context/authContext';
-import Dashboard from './pages/dashboard';
+import Dashboard from './pages/Dashboard';
 
 /**
  * @return {React.ReactElement}
@@ -15,7 +15,10 @@ const App: React.FC = (): React.ReactElement => {
       {isLoading ? (
         <p>Ca charge...</p>
       ) : error ? (
-        <p>Une erreur est survenue!</p>
+        <>
+          <p>Une erreur est survenue!</p>
+          <SpiderChart />
+        </>
       ) : (
         user && (
           <React.Fragment>
