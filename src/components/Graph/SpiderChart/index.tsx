@@ -1,14 +1,21 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
+import usePerformance from './../../../hooks/usePerformance';
 
 import classes from './SpiderChart.module.scss';
 
 const SpiderChart: React.FC = () => {
+  const { performance, loading } = usePerformance();
+
+  console.log(loading);
 
   useEffect(() => {
-    console.log('oui');
+    d3.select('#spider-chart').html('')
 
-    const size = 600;
+    if (!performance) return;
+    console.log('useEffect', performance);
+    const size = 260;
+    const radius = 20;
 
     const chart = d3
       .select('#spider-chart')
@@ -16,61 +23,41 @@ const SpiderChart: React.FC = () => {
       .attr('width', size)
       .attr('height', size)
       .append('g')
-    
-    let radialScale = d3.scaleLinear()
-      .domain([0,10])
-      .range([0,250]);
-    let ticks = [2,4,6,8,10];
+
+    const line = [1, 2, 3, 4, 5]
+
+    line.forEach((j) => {
+      const graphPoint = [0, 1, 2, 3, 4, 5].map((i) => {
+        const angle_deg = 60 * i - 30;
+        const angle_rad = Math.PI / 180 * angle_deg;
+        return [size/2 + (radius * j) * Math.cos(angle_rad), size/2 + (radius * j) * Math.sin(angle_rad)];
+      }).map((p) => p.join(',')).join(' ');
+  
+      chart.append("polygon")
+        .attr("points", `${graphPoint}`)
+        .attr("fill", "none")
+        .attr("stroke", "white")
+    })
+
+    const dataPoint = [5, 4, 3, 2, 1, 6].map((k, i) => {
+      const data = performance.data.find((d) => d.kind === k)?.value;
+      if (!data) throw new Error('no data');
+      const pourcent = Math.floor((data * 100) / 250);
+      const angle_deg = 60 * i - 30;
+      const angle_rad = Math.PI / 180 * angle_deg;
+      return [size/2 + pourcent * Math.cos(angle_rad), size/2 + pourcent * Math.sin(angle_rad)];
+    }).map((p) => p.join(',')).join(' ');
 
     chart.append("polygon")
-      .attr("points", `${size / 2}, 0 ${size * (3/4)}, ${size * 1/4}`)
-      .attr("fill", "none")
-      .attr("stroke", "gray")
+        .attr("points", dataPoint)
+        .attr("fill", "red")
+        .style('opacity', .7)
 
 
-    // ticks.forEach(t =>
-    //   chart.append("polygon")
-    //   .attr("points", '100, 100 200,200 300,300')
-    //   .attr("fill", "none")
-    //   .attr("stroke", "gray")
-    //   .attr("r", radialScale(t))
-    // );
-  
+  }, [performance, loading])
 
-
-  }, [])
-
+  if (loading) return <h3>Ca charge ...</h3>;
   return <div id="spider-chart" className={classes.container}></div>;
 };
 
 export default SpiderChart;
-
-
-type Oui = { [key: string]: Oui | string }
-type TradParams = { [key: string]: string } | null
-
-const DICT: Oui = {
-  "home": {
-    "title": "salut {{ user1 }} et {{ user2 }}"
-  }
-}
-
-function trad(path: string, params: TradParams = null) {
-  const splitPath = path.split('.');
-  let str = splitPath.reduce<Oui | string>((acc, val) => {
-    if (typeof acc === 'string') return acc
-    return acc[val];
-  }, DICT)
-  if (!str || typeof str !== 'string') throw new Error('Path not found')
-
-  if (params) {
-    str = Object.entries(params).reduce((acc, [key, val]) => {
-      const regexp = new RegExp(`{{(\\s|\\S)(${key})(\\s|\\S)}}`)
-      return acc.replace(regexp, val)
-    }, str)
-  }
-
-  return str;
-}
-
-console.log(trad('home', { user1: 'Rémi', user2: 'Nicolas' }))

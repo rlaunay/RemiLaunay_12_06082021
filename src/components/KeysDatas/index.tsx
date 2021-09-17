@@ -14,7 +14,6 @@ interface KeyDataProps {
  */
 const KeysDatas: React.FC<KeyDataProps> = (props): React.ReactElement => {
   const data = Object.entries(props.keydata).map(([key, value]) => {
-    console.log(value, key);
     const formatted = dataFormat(value, key);
 
     return <KeyData data={formatted} key={key} />;

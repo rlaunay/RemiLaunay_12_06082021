@@ -4,31 +4,20 @@ import { Session } from '../../../models/averageSessions';
 
 import classes from './LineChart.module.scss';
 import useAverageSessions from '../../../hooks/useAverageSessions';
-import useAuth from '../../../context/authContext';
-
-const DUMMY_DATA = [
-  { day: 1, sessionLength: 30 },
-  { day: 2, sessionLength: 40 },
-  { day: 3, sessionLength: 50 },
-  { day: 4, sessionLength: 30 },
-  { day: 5, sessionLength: 30 },
-  { day: 6, sessionLength: 50 },
-  { day: 7, sessionLength: 50 },
-];
 
 const jour = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
 const LineChart: React.FC = () => {
-  const { user } = useAuth();
-  const { averageSessions } = useAverageSessions(user!.id);
+  const { averageSessions, loading } = useAverageSessions();
 
   useEffect(() => {
-    let container = null;
+    d3.select('#line-chart').html('')
+
+    if (!averageSessions) return;
+
     const width = 260;
     const height = 260;
     // const margin = 10;
-
-    if (!averageSessions) return;
 
     const xScale = d3
       .scaleLinear()
@@ -55,9 +44,14 @@ const LineChart: React.FC = () => {
 
     const xAxisGen = d3.axisTop(xScale).tickSizeOuter(0);
 
-    container = d3.select('#lineChart').attr('width', width).attr('height', height);
+    const chart = d3
+      .select('#line-chart')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+    // container = d3.select('#lineChart').attr('width', width).attr('height', height);
 
-    container
+    chart
       .append('g')
       .append('path')
       .attr('d', line(averageSessions.sessions))
@@ -65,14 +59,14 @@ const LineChart: React.FC = () => {
       .attr('stroke', 'white')
       .attr('stroke-width', 1);
 
-    container
+      chart
       .append('text')
       .text('Durée moyenne des')
       .attr('class', classes.title)
       .attr('transform', 'translate(34, 29)');
-    container.append('text').text('sessions').attr('class', classes.title).attr('transform', 'translate(34, 49)');
+      chart.append('text').text('sessions').attr('class', classes.title).attr('transform', 'translate(34, 49)');
 
-    container
+      chart
       .append('g')
       .attr('transform', `translate(0, ${height + 9})`)
       .attr('class', classes.xAxis)
@@ -82,12 +76,11 @@ const LineChart: React.FC = () => {
           .tickPadding(20)
           .tickFormat((d) => jour[+d - 1]),
       );
-  }, [averageSessions]);
+  }, [averageSessions, loading]);
 
+  if (loading) return <h3>Ca charge ...</h3>;
   return (
-    <div className={classes.container}>
-      <svg id="lineChart"></svg>
-    </div>
+    <div id="line-chart" className={classes.container}></div>
   );
 };
 
