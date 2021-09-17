@@ -13,7 +13,6 @@ const SpiderChart: React.FC = () => {
     d3.select('#spider-chart').html('')
 
     if (!performance) return;
-    console.log('useEffect', performance);
     const size = 260;
     const radius = 20;
 
