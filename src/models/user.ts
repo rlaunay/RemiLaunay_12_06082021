@@ -5,7 +5,8 @@ export default interface User {
     lastName: string;
     age: number;
   };
-  score: number;
+  todayScore?: number;
+  score?: number;
   keyData: {
     calorieCount: number;
     proteinCount: number;

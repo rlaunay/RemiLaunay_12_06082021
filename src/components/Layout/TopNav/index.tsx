@@ -1,4 +1,3 @@
-import React from "react";
 import Logo from "../../Icon/Logo";
 
 import classes from './TopNav.module.scss'

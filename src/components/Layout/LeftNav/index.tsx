@@ -1,5 +1,3 @@
-import React from 'react';
-
 import MeditaIco from './../../Icon/MeditaIco';
 import NageIco from './../../Icon/NageIco';
 import VeloIco from './../../Icon/VeloIco';

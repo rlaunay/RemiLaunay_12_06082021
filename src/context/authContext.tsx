@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, createContext } from 'react';
 import User from '../models/user';
 import api from '../api';
 
-const ID = 12;
+const ID = 18;
 
-const AuthContext = React.createContext<{
+const AuthContext = createContext<{
   user: User | null;
   isLoading: boolean;
   error: Error | null;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import SpiderChart from './components/Graph/SpiderChart';
 import Layout from './components/Layout';
 import Header from './components/Layout/Header';
@@ -21,10 +21,10 @@ const App: React.FC = (): React.ReactElement => {
         </>
       ) : (
         user && (
-          <React.Fragment>
+          <Fragment>
             <Header />
             <Dashboard />
-          </React.Fragment>
+          </Fragment>
         )
       )}
     </Layout>

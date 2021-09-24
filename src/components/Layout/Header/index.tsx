@@ -1,4 +1,3 @@
-import React from 'react';
 import useAuth from '../../../context/authContext';
 
 import classes from './Header.module.scss';

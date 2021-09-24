@@ -1,4 +1,3 @@
-import React from 'react';
 import KeyData from './KeyData';
 import { dataFormat } from '../../helpers/dataFormat';
 

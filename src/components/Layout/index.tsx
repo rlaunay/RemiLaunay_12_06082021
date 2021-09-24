@@ -1,5 +1,3 @@
-import React from 'react';
-
 import classes from './Layout.module.scss';
 import LeftNav from './LeftNav';
 import TopNav from './TopNav';
