@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import usePerformance from './../../../hooks/usePerformance';
 
@@ -6,18 +6,20 @@ import classes from './SpiderChart.module.scss';
 
 const SpiderChart: React.FC = () => {
   const { performance, loading } = usePerformance();
+  const containerRef = useRef(null);
 
   console.log(loading);
 
   useEffect(() => {
-    d3.select('#spider-chart').html('')
+    const container = d3.select(containerRef.current).html('');
 
     if (!performance) return;
     const size = 260;
     const radius = 20;
 
-    const chart = d3
-      .select('#spider-chart')
+    const MAX = Math.max(...performance.data.map(d => d.value)) + 10
+
+    const chart = container
       .append('svg')
       .attr('width', size)
       .attr('height', size)
@@ -41,7 +43,7 @@ const SpiderChart: React.FC = () => {
     const dataPoint = [5, 4, 3, 2, 1, 6].map((k, i) => {
       const data = performance.data.find((d) => d.kind === k)?.value;
       if (!data) throw new Error('no data');
-      const pourcent = Math.floor((data * 100) / 250);
+      const pourcent = Math.floor((data * 100) / MAX);
       const angle_deg = 60 * i - 30;
       const angle_rad = Math.PI / 180 * angle_deg;
       return [size/2 + pourcent * Math.cos(angle_rad), size/2 + pourcent * Math.sin(angle_rad)];
@@ -56,7 +58,7 @@ const SpiderChart: React.FC = () => {
   }, [performance, loading])
 
   if (loading) return <h3>Ca charge ...</h3>;
-  return <div id="spider-chart" className={classes.container}></div>;
+  return <div ref={containerRef} id="spider-chart" className={classes.container}></div>;
 };
 
 export default SpiderChart;

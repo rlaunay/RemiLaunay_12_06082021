@@ -3,7 +3,7 @@ import api from '../api';
 import useAuth from '../context/authContext';
 import Activity from '../models/activity';
 
-const useActivity = (id: number) => {
+const useActivity = () => {
   const {user, isLoading } = useAuth();
   const [activity, setActivity] = useState<Activity | null>(null);
   const [dataLoading, setDataLoading] = useState<boolean>(false);

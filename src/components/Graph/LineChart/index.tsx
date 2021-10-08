@@ -9,9 +9,10 @@ const jour = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
 const LineChart: React.FC = () => {
   const { averageSessions, loading } = useAverageSessions();
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    d3.select('#line-chart').html('')
+    const container = d3.select(containerRef.current).html('');
 
     if (!averageSessions) return;
 
@@ -19,13 +20,15 @@ const LineChart: React.FC = () => {
     const height = 260;
     // const margin = 10;
 
+    const MAX = Math.max(...averageSessions.sessions.map(s => s.sessionLength)) + 10
+
     const xScale = d3
       .scaleLinear()
       .domain([1, 7])
       .range([0, width - 20]);
     const yScale = d3
       .scaleLinear()
-      .domain([0, 60]) // TODO domain dynamique
+      .domain([0, MAX])
       .range([75, height - 30]);
 
     const xAccessor = (d: Session): number => {
@@ -44,8 +47,7 @@ const LineChart: React.FC = () => {
 
     const xAxisGen = d3.axisTop(xScale).tickSizeOuter(0);
 
-    const chart = d3
-      .select('#line-chart')
+    const chart = container
       .append('svg')
       .attr('width', width)
       .attr('height', height)
@@ -80,7 +82,7 @@ const LineChart: React.FC = () => {
 
   if (loading) return <h3>Ca charge ...</h3>;
   return (
-    <div id="line-chart" className={classes.container}></div>
+    <div ref={containerRef} id="line-chart" className={classes.container}></div>
   );
 };
 
