@@ -2,8 +2,34 @@
   height: 100%;
   width: 100%;
   background-color: #FBFBFB;
+  border-radius: 5px;
+  // background-color: green;
 }
 
 .bar {
   fill: #E60000;
+}
+
+.title {
+  fill: #20253A;
+  font-size: 15px;
+}
+
+.legend {
+  fill: #74798C;
+  font-size: 14px;
+}
+
+.yAxis {
+  font-size: 14px;
+  color: #9B9EAC;
+
+  & path {
+    stroke: none !important;
+  }
+}
+
+.xAxis {
+  font-size: 14px;
+  fill: #9B9EAC;
 }

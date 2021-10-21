@@ -1,19 +1,26 @@
-import { useContext, useEffect, useState, createContext } from 'react';
+import React, { useContext, useEffect, useState, createContext } from 'react';
 import User from '../models/user';
 import api from '../api';
 
 const ID = 18;
 
-const AuthContext = createContext<{
+type AuthContextType = {
   user: User | null;
   isLoading: boolean;
   error: Error | null;
-}>({
+}
+
+const AuthContext = createContext<AuthContextType>({
   user: null,
   isLoading: false,
   error: null,
 });
 
+/**
+ * Provider for authentication state
+ * @param {React.ComponentProps} props 
+ * @returns {React.ReactElement}
+ */
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsloading] = useState<boolean>(false);
@@ -41,6 +48,10 @@ export const AuthProvider: React.FC = ({ children }) => {
   return <AuthContext.Provider value={{ user, isLoading, error }}>{children}</AuthContext.Provider>;
 };
 
-export default function useAuth() {
+/**
+ * hooks for consume AuthContext
+ * @returns {AuthContextType}
+ */
+export default function useAuth(): AuthContextType {
   return useContext(AuthContext);
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { Session } from '../../../models/averageSessions';
+import AverageSessions, { Session } from '../../../models/averageSessions';
 
 import classes from './LineChart.module.scss';
 import useAverageSessions from '../../../hooks/useAverageSessions';
@@ -22,10 +22,13 @@ const LineChart: React.FC = () => {
 
     const MAX = Math.max(...averageSessions.sessions.map(s => s.sessionLength)) + 10
 
+    const x_domain = d3.extent(averageSessions.sessions, (d) => d.day),
+    y_domain = d3.extent(averageSessions.sessions, (d) => d.sessionLength);
+
     const xScale = d3
       .scaleLinear()
       .domain([1, 7])
-      .range([0, width - 20]);
+      .range([0, width]);
     const yScale = d3
       .scaleLinear()
       .domain([0, MAX])
@@ -45,7 +48,7 @@ const LineChart: React.FC = () => {
       .y((d) => yScale(yAccessor(d)))
       .curve(d3.curveBasis);
 
-    const xAxisGen = d3.axisTop(xScale).tickSizeOuter(0);
+    const xAxisGen = d3.axisTop(xScale);
 
     const chart = container
       .append('svg')
@@ -61,14 +64,19 @@ const LineChart: React.FC = () => {
       .attr('stroke', 'white')
       .attr('stroke-width', 1);
 
-      chart
+    chart
       .append('text')
       .text('Durée moyenne des')
       .attr('class', classes.title)
       .attr('transform', 'translate(34, 29)');
-      chart.append('text').text('sessions').attr('class', classes.title).attr('transform', 'translate(34, 49)');
 
-      chart
+    chart
+      .append('text')
+      .text('sessions')
+      .attr('class', classes.title)
+      .attr('transform', 'translate(34, 49)');
+
+    chart
       .append('g')
       .attr('transform', `translate(0, ${height + 9})`)
       .attr('class', classes.xAxis)
@@ -76,7 +84,7 @@ const LineChart: React.FC = () => {
         xAxisGen
           .ticks(7)
           .tickPadding(20)
-          .tickFormat((d) => jour[+d - 1]),
+          .tickFormat((d) => jour[+d - 1])
       );
   }, [averageSessions, loading]);
 

@@ -26,11 +26,29 @@ const SpiderChart: React.FC = () => {
       .append('g')
 
     const line = [1, 2, 3, 4, 5]
+    const labels = ['speed', 'strength', 'endurance', 'energy', 'cardio', 'intensity']
 
     line.forEach((j) => {
       const graphPoint = [0, 1, 2, 3, 4, 5].map((i) => {
         const angle_deg = 60 * i - 30;
         const angle_rad = Math.PI / 180 * angle_deg;
+
+        if (j === 5) {
+          const x = size/2 + (117) * Math.cos(angle_rad);
+          const y = size/2 + (117) * Math.sin(angle_rad);
+
+          chart
+            .append('text')
+            .text(labels[i])
+            .attr('x', x)
+            .attr('y', y)
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
+            .attr('font-size', '10')
+            .attr('font-weight', 'regular')
+            .attr('fill', 'white')
+        }
+
         return [size/2 + (radius * j) * Math.cos(angle_rad), size/2 + (radius * j) * Math.sin(angle_rad)];
       }).map((p) => p.join(',')).join(' ');
   
@@ -53,7 +71,6 @@ const SpiderChart: React.FC = () => {
         .attr("points", dataPoint)
         .attr("fill", "red")
         .style('opacity', .7)
-
 
   }, [performance, loading])
 

@@ -8,6 +8,10 @@ import useAuth from '../context/authContext';
 
 import classes from './Dashboard.module.scss';
 
+/**
+ * Dashboardpage display all data in graph
+ * @return {React.ReactElement}
+ */
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
 

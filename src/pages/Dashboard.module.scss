@@ -10,7 +10,7 @@
     grid-template-rows: 320px 260px;
     grid-template-columns: repeat(3, 260px);
     align-content: space-between;
-    grid-column-gap: 25px;
+    grid-gap: 25px;
 
     & div:first-child {
       grid-column: 1 / 4;

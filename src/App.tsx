@@ -6,6 +6,7 @@ import useAuth from './context/authContext';
 import Dashboard from './pages/Dashboard';
 
 /**
+ * Root component
  * @return {React.ReactElement}
  */
 const App: React.FC = (): React.ReactElement => {

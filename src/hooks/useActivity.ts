@@ -3,7 +3,13 @@ import api from '../api';
 import useAuth from '../context/authContext';
 import Activity from '../models/activity';
 
-const useActivity = () => {
+type HookReturn = { activity: Activity | null, loading: boolean }
+
+/**
+ * Hooks for getting activity data of authenticated user
+ * @returns {HookReturn}
+ */
+const useActivity = (): HookReturn => {
   const {user, isLoading } = useAuth();
   const [activity, setActivity] = useState<Activity | null>(null);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
