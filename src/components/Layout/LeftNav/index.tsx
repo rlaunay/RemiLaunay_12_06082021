@@ -1,5 +1,3 @@
-import React from 'react';
-
 import MeditaIco from './../../Icon/MeditaIco';
 import NageIco from './../../Icon/NageIco';
 import VeloIco from './../../Icon/VeloIco';
@@ -7,6 +5,10 @@ import AltereIco from './../../Icon/AltereIco';
 
 import classes from './LeftNav.module.scss';
 
+/**
+ * Left nav bar
+ * @returns {React.ReactElement}
+ */
 const LeftNav: React.FC = () => {
   return (
     <nav className={classes.nav}>

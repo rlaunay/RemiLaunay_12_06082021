@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+  & .gridchart {
+    display: grid;
+    grid-template-rows: 320px 260px;
+    grid-template-columns: repeat(3, 260px);
+    align-content: space-between;
+    grid-gap: 25px;
+
+    & div:first-child {
+      grid-column: 1 / 4;
+      grid-row: 1 / 2;
+    }
+  }
+}
+
+@media (max-width: 1420px) {
+  .container {
+    & .gridchart {
+      grid-template-rows: 300px 230px;
+      grid-template-columns: repeat(3, 230px);
+      grid-gap: 15px;
+    }
+  }
+}

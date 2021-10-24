@@ -1,11 +1,18 @@
 .header {
+  margin-bottom: 60px;
   & h1 {
     font-size: 48px;
     font-weight: 500;
-    margin-bottom: 41px;
+    margin-bottom: 20px;
 
     & span {
       color: var(--color-red);
     }
+  }
+}
+
+@media (max-width: 1320px) {
+  .header {
+    margin-bottom: 30px;
   }
 }

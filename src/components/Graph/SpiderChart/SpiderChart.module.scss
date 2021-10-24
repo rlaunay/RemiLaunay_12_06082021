@@ -1,0 +1,15 @@
+.container {
+  // display: flex;
+  height: 260px;
+  width: 260px;
+  background-color: #282D30;
+  color: white;
+  border-radius: 5px;
+}
+
+@media (max-width: 1420px) {
+  .container {
+    height: 230px;
+    width: 230px;
+  }
+}

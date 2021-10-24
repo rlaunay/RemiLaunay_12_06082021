@@ -1,0 +1,21 @@
+.ul {
+  list-style: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 260px;
+}
+
+@media (max-width: 1420px) {
+  .ul {
+    width: 200px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .ul {
+    width: 150px;
+  }
+}

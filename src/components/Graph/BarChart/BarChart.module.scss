@@ -1,0 +1,59 @@
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: #FBFBFB;
+  border-radius: 5px;
+  // background-color: green;
+}
+
+// @media (max-width: 1420px) {
+//   .container {
+//     width: 760;
+//     height: 300;
+//   }
+// }
+
+.tooltip {
+  position: fixed;
+  // top: 0;
+  // left: 0;
+  height: 63px;
+  width: 40px;
+  background-color: #E60000;
+  font-size: 7px;
+  pointer-events: none;
+  display: flex;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.groupBar {
+  & path {
+    padding: 500px;
+  }
+}
+.title {
+  fill: #20253A;
+  font-size: 15px;
+}
+
+.legend {
+  fill: #74798C;
+  font-size: 14px;
+}
+
+.yAxis {
+  font-size: 14px;
+  color: #9B9EAC;
+
+  & path {
+    stroke: none !important;
+  }
+}
+
+.xAxis {
+  font-size: 14px;
+  fill: #9B9EAC;
+}
