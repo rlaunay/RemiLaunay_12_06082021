@@ -17,17 +17,17 @@ npm install
 
 ## Usage
 
-Run the dev server :
+Run the dev server:
 ```bash
 npm run dev
 ```
 
-Build the project for prod:
+Build the project for production:
 ```bash
 npm run build
 ```
 
-Serve the build for testing prod build:
+Serve the build for testing production setup:
 ```bash
 npm run serve
 ```
