@@ -5,7 +5,7 @@
   background-color: #fbfbfb;
   border-radius: 5px;
   height: 120px;
-  width: 260px;
+  width: 100%;
 
   & svg {
     margin-right: 20px;
@@ -25,6 +25,27 @@
       font-weight: 500;
       color: #74798c;
       font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 1150px) {
+  .keyData {
+    height: 70px;
+
+    & svg {
+      height: 30px;
+      width: 30px;
+    }
+
+    & .values {
+      & span:first-child {
+        font-size: 15px;
+      }
+  
+      & span:last-child {
+        font-size: 11px;
+      }
     }
   }
 }

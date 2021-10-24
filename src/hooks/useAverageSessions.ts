@@ -3,11 +3,13 @@ import AverageSessions from '../models/averageSessions';
 import api from '../api';
 import useAuth from '../context/authContext';
 
+type AverageSessionsReturn = { averageSessions: AverageSessions | null, loading: boolean }
+
 /**
  * Hooks for getting average sessions data of authenticated user
- * @returns {{ AverageSession, boolean }}
+ * @returns {AverageSessionsReturn}
  */
-const useAverageSessions = () => {
+const useAverageSessions = (): AverageSessionsReturn => {
   const {user, isLoading } = useAuth();
   const [averageSessions, setAverageSessions] = useState<AverageSessions | null>(null);
   const [dataLoading, setDataLoading] = useState<boolean>(false);

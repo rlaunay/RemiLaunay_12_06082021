@@ -19,3 +19,51 @@
     font-weight: lighter;
   }
 }
+
+@media (max-width: 1420px) {
+  .container {
+    height: 230px;
+    width: 230px;
+  }
+}
+
+.tooltip {
+  position: fixed;
+  display: none;
+  height: 25px;
+  width: 40px;
+  background-color: white;
+  text-align: center;
+  padding-top: 7px;
+  font-size: 8px;
+  z-index: 200;
+}
+
+.dot {
+  position: fixed;
+  height: 20px;
+  width: 20px;
+  transform: translate(-50%, -50%);
+  border-radius: 50px;
+  background-color: rgba(255,255,255, 0.5);
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 10px;
+    width: 10px;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+    background-color: white;
+  }
+}
+
+.voile {
+  position: fixed;
+  background-color: black;
+  opacity: 0.2;
+  pointer-events: none;
+}

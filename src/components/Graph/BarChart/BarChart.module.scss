@@ -6,10 +6,34 @@
   // background-color: green;
 }
 
-.bar {
-  fill: #E60000;
+// @media (max-width: 1420px) {
+//   .container {
+//     width: 760;
+//     height: 300;
+//   }
+// }
+
+.tooltip {
+  position: fixed;
+  // top: 0;
+  // left: 0;
+  height: 63px;
+  width: 40px;
+  background-color: #E60000;
+  font-size: 7px;
+  pointer-events: none;
+  display: flex;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
+.groupBar {
+  & path {
+    padding: 500px;
+  }
+}
 .title {
   fill: #20253A;
   font-size: 15px;

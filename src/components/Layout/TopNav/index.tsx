@@ -2,6 +2,10 @@ import Logo from "../../Icon/Logo";
 
 import classes from './TopNav.module.scss'
 
+/**
+ * Top nav bar
+ * @returns {React.ReactElement}
+ */
 const TopNav: React.FC = () => {
   return (
     <nav className={classes.nav}>

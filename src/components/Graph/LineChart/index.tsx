@@ -1,92 +1,28 @@
 import { useEffect, useRef } from 'react';
-import * as d3 from 'd3';
-import AverageSessions, { Session } from '../../../models/averageSessions';
 
 import classes from './LineChart.module.scss';
 import useAverageSessions from '../../../hooks/useAverageSessions';
+import useWindowSize from '../../../hooks/useWindowSize';
+import generateLineChart from '../../../helpers/lineChart';
 
-const jour = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-
+/**
+ * Linear Chart React component
+ * @returns {React.ReactElement}
+ */
 const LineChart: React.FC = () => {
-  const { averageSessions, loading } = useAverageSessions();
+  let { averageSessions, loading } = useAverageSessions();
   const containerRef = useRef(null);
+  let size = { width: 260, height: 260 };
+
+  const { width } = useWindowSize();
+
+  if (width <= 1420) {
+    size = { width: 230, height: 230 }
+  }
 
   useEffect(() => {
-    const container = d3.select(containerRef.current).html('');
-
-    if (!averageSessions) return;
-
-    const width = 260;
-    const height = 260;
-    // const margin = 10;
-
-    const MAX = Math.max(...averageSessions.sessions.map(s => s.sessionLength)) + 10
-
-    const x_domain = d3.extent(averageSessions.sessions, (d) => d.day),
-    y_domain = d3.extent(averageSessions.sessions, (d) => d.sessionLength);
-
-    const xScale = d3
-      .scaleLinear()
-      .domain([1, 7])
-      .range([0, width]);
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, MAX])
-      .range([75, height - 30]);
-
-    const xAccessor = (d: Session): number => {
-      return d.day;
-    };
-
-    const yAccessor = (d: Session): number => {
-      return d.sessionLength;
-    };
-
-    const line = d3
-      .line<Session>()
-      .x((d) => xScale(xAccessor(d)))
-      .y((d) => yScale(yAccessor(d)))
-      .curve(d3.curveBasis);
-
-    const xAxisGen = d3.axisTop(xScale);
-
-    const chart = container
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-    // container = d3.select('#lineChart').attr('width', width).attr('height', height);
-
-    chart
-      .append('g')
-      .append('path')
-      .attr('d', line(averageSessions.sessions))
-      .attr('fill', 'none')
-      .attr('stroke', 'white')
-      .attr('stroke-width', 1);
-
-    chart
-      .append('text')
-      .text('Durée moyenne des')
-      .attr('class', classes.title)
-      .attr('transform', 'translate(34, 29)');
-
-    chart
-      .append('text')
-      .text('sessions')
-      .attr('class', classes.title)
-      .attr('transform', 'translate(34, 49)');
-
-    chart
-      .append('g')
-      .attr('transform', `translate(0, ${height + 9})`)
-      .attr('class', classes.xAxis)
-      .call(
-        xAxisGen
-          .ticks(7)
-          .tickPadding(20)
-          .tickFormat((d) => jour[+d - 1])
-      );
-  }, [averageSessions, loading]);
+    generateLineChart(containerRef.current, size, averageSessions?.sessions)
+  }, [averageSessions, loading, size]);
 
   if (loading) return <h3>Ca charge ...</h3>;
   return (

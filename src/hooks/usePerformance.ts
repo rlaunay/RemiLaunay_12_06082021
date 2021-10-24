@@ -3,12 +3,13 @@ import Performance from '../models/performance';
 import api from '../api';
 import useAuth from '../context/authContext';
 
+type PerformanceReturn = { performance: Performance | null, loading: boolean }
 
 /**
  * Hooks for getting performance data of authenticated user
- * @returns {{ Performance, boolean }}
+ * @returns {PerformanceReturn}
  */
-const usePerformance = () => {
+const usePerformance = (): PerformanceReturn => {
   const { user, isLoading } = useAuth();
   const [performance, setPerformance] = useState<Performance | null>(null);
   const [dataLoading, setDataLoading] = useState<boolean>(false);

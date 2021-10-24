@@ -18,3 +18,13 @@
     }
   }
 }
+
+@media (max-width: 1420px) {
+  .container {
+    & .gridchart {
+      grid-template-rows: 300px 230px;
+      grid-template-columns: repeat(3, 230px);
+      grid-gap: 15px;
+    }
+  }
+}

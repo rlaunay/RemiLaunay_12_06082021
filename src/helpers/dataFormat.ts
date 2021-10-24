@@ -33,7 +33,7 @@ const data: {
   },
 };
 
-export type Data = {
+export type FormatedData = {
   value: string;
   icon: FC;
   label: string;
@@ -43,9 +43,9 @@ export type Data = {
  * Return well formetted data for display it correctly 
  * @param value value of data
  * @param unite unite of data
- * @returns {Data} well formatted data
+ * @returns {FormatedData} well formatted data
  */
-export const dataFormat = (value: number, unite: string): Data => {
+export const dataFormat = (value: number, unite: string): FormatedData => {
   const valueFormtted = numberWithCommas(value);
   return {
     value: `${valueFormtted}${data[unite].unite}`,
@@ -57,7 +57,7 @@ export const dataFormat = (value: number, unite: string): Data => {
 /**
  * Format number for write it with coma every 1000
  * @param nb nb to format
- * @returns formmated nb
+ * @returns {string} formmated nb
  */
 function numberWithCommas(nb: number) {
   return nb.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
